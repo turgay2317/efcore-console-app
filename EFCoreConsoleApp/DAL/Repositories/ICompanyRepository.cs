@@ -2,7 +2,7 @@ using EFCoreConsoleApp.DAL.Entities;
 
 namespace EFCoreConsoleApp.DAL.Repositories;
 
-public interface IUserRepository
+public interface ICompanyRepository
 {
-    Task<List<User>> GetUsersAsync();
+    Task<List<Company>> GetCompaniesAsync();
 }

@@ -6,7 +6,8 @@ namespace EFCoreConsoleApp.DAL;
 
 public class MyDbContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
+    public DbSet<Employee> Users { get; set; }
+    public DbSet<Company> Companies { get; set; }
 
     public MyDbContext()
     {
@@ -31,10 +32,16 @@ public class MyDbContext : DbContext
          * Name : [Required]
          * Surname : [Required]
          */
-        modelBuilder.Entity<User>().HasKey(user => user.Id);
-        modelBuilder.Entity<User>().Property(user => user.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<User>().Property(user => user.Name).IsRequired(true);
-        modelBuilder.Entity<User>().Property(user => user.Surname).IsRequired(true);
+        modelBuilder.Entity<Employee>().HasKey(user => user.Id);
+        modelBuilder.Entity<Employee>().Property(user => user.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<Employee>().Property(user => user.Name).IsRequired(true);
+        modelBuilder.Entity<Employee>().Property(user => user.Surname).IsRequired(true);
+        
+        /* The below comment line means has-many relation with fluent api
+         * modelBuilder.Entity<Company>().HasMany(x => x.Employees).WithOne(x => x.Company).HasForeignKey(x => x.CompanyId);)
+         * company HAS MANY employees WITH ONE company that HAS FOREIGN KEY companyId
+         */
+        
         base.OnModelCreating(modelBuilder);
     }
 }

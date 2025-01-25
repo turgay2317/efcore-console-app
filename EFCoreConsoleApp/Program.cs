@@ -6,10 +6,22 @@ using EFCoreConsoleApp.DAL.Services;
 DbConfigInitalizer.Build();
 var context = new MyDbContext();
 
-var repository = new UserRepository(context);
-var service = new UserService(repository);
-var users = await service.GetAllUsers();
+var companyRepository = new CompanyRepository(context);
+var companyService = new CompanyService(companyRepository);
+var companies = await companyService.GetAllCompaniesAsync();
 
+companies.ForEach(company =>
+{
+    Console.WriteLine($"*Company = {company.Id} {company.Name} Employee Count: {company.Employees.Count}");
+    
+    company.Employees.ForEach(employee =>
+    {
+        Console.WriteLine($"****Employee = {employee.Name} {employee.Surname} ${employee.Salary}");
+    });
+});
+
+/*
+ 
 users.ForEach(user =>
 {
     Console.WriteLine($"State before updating = {context.Entry(user).State}");
@@ -22,4 +34,6 @@ context.SaveChanges();
 users.ForEach(user =>
 {
     Console.WriteLine($"State after all = {context.Entry(user).State}");
-});
+}); 
+
+*/
